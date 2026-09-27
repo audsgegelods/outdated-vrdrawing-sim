@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://cesyaqlp6tdff"]
+
+[ext_resource type="Script" uid="uid://bviuaocktau87" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_itgqx"]
+[ext_resource type="Script" uid="uid://ogrj41n8msqj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand.gd" id="2_0wt77"]
+[ext_resource type="Script" uid="uid://mpyglxpt2us7" path="res://pencil.gd" id="3_71b7v"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_itgqx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_itgqx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_71b7v"]
+albedo_color = Color(0.710693, 0.566667, 0.258413, 1)
+
+[node name="Pencil" type="RigidBody3D"]
+gravity_scale = 0.0
+script = ExtResource("1_itgqx")
+picked_up_layer = 65541
+release_mode = 1
+second_hand_grab = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
+shape = SubResource("CylinderShape3D_itgqx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0282843, 0, 0.0282843, 0, 0.165, 0, -0.0282843, 0, 0.0282843, 0, 0, 0)
+mesh = SubResource("BoxMesh_itgqx")
+surface_material_override/0 = SubResource("StandardMaterial3D_71b7v")
+
+[node name="GrabPointLeft" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0158318, 0, -0.0964989)
+script = ExtResource("2_0wt77")
+
+[node name="GrabPointRight" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0168872, 0, -0.0971017)
+script = ExtResource("2_0wt77")
+hand = 1
+
+[node name="PencilFunction" type="Node3D" parent="."]
+script = ExtResource("3_71b7v")
+
+[node name="RayCast3D" type="RayCast3D" parent="PencilFunction"]
+target_position = Vector3(0, -0.14, 0)

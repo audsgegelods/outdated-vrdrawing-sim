@@ -1,0 +1,39 @@
+[gd_scene load_steps=9 format=3 uid="uid://iqkghxhc8bp2"]
+
+[ext_resource type="Script" uid="uid://cjdogxmuxtwoc" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://dxqa7k8gdesdt" path="res://xr_player.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://22lceixv3aj1" path="res://OISSpiderBudPickable.tscn" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dwbkadlb2po6s" path="res://OIS1HundredSinsPickable.tscn" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://kjrs58jg3oqi" path="res://icon.svg" id="5_lquwl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h2yge"]
+size = Vector3(13.6835, 0.001, 28.9592)
+
+[sub_resource type="QuadMesh" id="QuadMesh_7mycd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_272bh"]
+albedo_texture = ExtResource("5_lquwl")
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_0xm2m")
+
+[node name="xr_player" parent="." instance=ExtResource("2_h2yge")]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+gravity_scale = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("BoxShape3D_h2yge")
+
+[node name="PickableObject" parent="." instance=ExtResource("3_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.363436, 0.381644, -0.235398)
+
+[node name="PickableObject2" parent="." instance=ExtResource("4_1bvp3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.300191, 0.39825, -0.19936)
+
+[node name="Node3D" type="Node3D" parent="."]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+mesh = SubResource("QuadMesh_7mycd")
+surface_material_override/0 = SubResource("StandardMaterial3D_272bh")

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bojeaw0btxbva"]
+
+[ext_resource type="PackedScene" uid="uid://de2ha1wv4tc1q" path="res://ego-red-eyes-spider-bud/source/Red_Eyes_Export.fbx" id="1_lxule"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Red_Eyes_Export" parent="." instance=ExtResource("1_lxule")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)

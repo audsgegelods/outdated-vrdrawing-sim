@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://bwwe5b8yovxk0"]
+
+[ext_resource type="Script" uid="uid://ctn26mbp8xkl0" path="res://drawable_surface_3d.gd" id="1_11x5d"]
+
+[sub_resource type="Gradient" id="Gradient_11x5d"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mjufw"]
+gradient = SubResource("Gradient_11x5d")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xjcl5"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_fhkv2"]
+mesh = SubResource("PlaneMesh_xjcl5")
+base_texture = SubResource("GradientTexture1D_mjufw")
+image_size = Vector2(128, 170)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_05okw"]
+
+[node name="DrawableSurface3D" type="Node3D"]
+script = ExtResource("1_11x5d")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+axis = 1
+texture = SubResource("MeshTexture_fhkv2")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_05okw")

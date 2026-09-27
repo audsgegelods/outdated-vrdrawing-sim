@@ -1,0 +1,81 @@
+[gd_scene load_steps=14 format=3 uid="uid://dxpw613p7wx0y"]
+
+[ext_resource type="Script" uid="uid://cjdogxmuxtwoc" path="res://main.gd" id="1_4cinx"]
+[ext_resource type="PackedScene" uid="uid://dxqa7k8gdesdt" path="res://xr_player.tscn" id="1_bmi31"]
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="4_lhbkq"]
+[ext_resource type="PackedScene" uid="uid://bwwe5b8yovxk0" path="res://drawable_surface_3d.tscn" id="4_uba8c"]
+[ext_resource type="Script" uid="uid://ogrj41n8msqj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand.gd" id="5_ycq4v"]
+[ext_resource type="Script" uid="uid://mpyglxpt2us7" path="res://pencil.gd" id="6_p06cb"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dw0ji"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bmi31"]
+albedo_color = Color(0.91206, 0.689403, 0.577864, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_n26bt"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ykwhb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m80jb"]
+albedo_color = Color(0.710693, 0.566667, 0.258413, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ycq4v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p06cb"]
+albedo_color = Color(0.806389, 0, 0.28968, 1)
+
+[node name="DrawingTest" type="Node3D"]
+script = ExtResource("1_4cinx")
+
+[node name="xr_player" parent="." instance=ExtResource("1_bmi31")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.180609, -0.0267489)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.311274, 0)
+mesh = SubResource("PlaneMesh_dw0ji")
+surface_material_override/0 = SubResource("StandardMaterial3D_bmi31")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.911943, 0)
+light_color = Color(0.791326, 0.720758, 0.643936, 1)
+light_energy = 1.455
+
+[node name="DrawableSurface3D" parent="." instance=ExtResource("4_uba8c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2906, 0.00587603)
+
+[node name="PickableObject" parent="." instance=ExtResource("4_lhbkq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.145894, 0.267876)
+gravity_scale = 0.0
+picked_up_layer = 65541
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="PickableObject"]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, 0)
+shape = SubResource("CylinderShape3D_n26bt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PickableObject"]
+transform = Transform3D(0.0282843, 0, 0.0282843, 0, 0.165, 0, -0.0282843, 0, 0.0282843, 0, 0, 0)
+mesh = SubResource("BoxMesh_ykwhb")
+surface_material_override/0 = SubResource("StandardMaterial3D_m80jb")
+
+[node name="GrabPointLeft" type="Marker3D" parent="PickableObject"]
+transform = Transform3D(1, 0, 0, 0, 0.210762, 0.977538, 0, -0.977538, 0.210762, 0.0158318, -0.017608, -0.0573688)
+script = ExtResource("5_ycq4v")
+
+[node name="GrabPointRight" type="Marker3D" parent="PickableObject"]
+transform = Transform3D(1, 0, 0, 0, 0.210762, 0.977538, 0, -0.977538, 0.210762, -0.0168872, -0.0181973, -0.0574959)
+script = ExtResource("5_ycq4v")
+hand = 1
+
+[node name="PencilFunction" type="Node3D" parent="PickableObject"]
+script = ExtResource("6_p06cb")
+
+[node name="RayCast3D" type="RayCast3D" parent="PickableObject/PencilFunction"]
+target_position = Vector3(0, -0.43, 0)
+collision_mask = 5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PickableObject/PencilFunction"]
+transform = Transform3D(0.015, 0, 0, 0, 0.17, 0, 0, 0, 0.015, 0, -0.263457, 0)
+mesh = SubResource("CylinderMesh_ycq4v")
+surface_material_override/0 = SubResource("StandardMaterial3D_p06cb")
+
+[connection signal="contact_drawable_surface" from="PickableObject/PencilFunction" to="DrawableSurface3D" method="_on_pen_contact_drawable_surface"]

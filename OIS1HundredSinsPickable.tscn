@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwbkadlb2po6s"]
+
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_7dnt6"]
+[ext_resource type="PackedScene" uid="uid://sw66mwxl6q7k" path="res://ego-penitence-one-sin-hundred-deeds/source/Penitence_Export.fbx" id="2_x2j5w"]
+[ext_resource type="Script" uid="uid://ogrj41n8msqj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand.gd" id="3_x2j5w"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7dnt6"]
+height = 0.185303
+radius = 0.01
+
+[node name="PickableObject" instance=ExtResource("1_7dnt6")]
+gravity_scale = 0.0
+picked_up_layer = 65540
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0132508, 0.0218506, -0.00394531)
+shape = SubResource("CylinderShape3D_7dnt6")
+
+[node name="Penitence_Export" parent="." index="1" instance=ExtResource("2_x2j5w")]
+transform = Transform3D(16.9676, 10.5877, 0, -10.5877, 16.9676, 0, 0, 0, 20, -0.021, 0.2, -0.006)
+
+[node name="XRToolsGrabPointHand" type="Marker3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0193004, 0.00396124, -0.107512)
+script = ExtResource("3_x2j5w")
+metadata/_custom_type_script = "uid://ogrj41n8msqj"
+
+[node name="XRToolsGrabPointHand2" type="Marker3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000443913, -0.00102273, -0.108262)
+script = ExtResource("3_x2j5w")
+hand = 1
+metadata/_custom_type_script = "uid://ogrj41n8msqj"
